@@ -47,7 +47,29 @@ def readVec(fn):
   Y.append(splits[size-1]) 
   X.append(v)
  return X,Y
- 
+
+
+def training(clf_param,clf,X,Y):
+ Y = np.array(Y)
+ X = np.array(X)
+ clf_param = clf_param.fit(X, Y)
+ model = SelectFromModel(clf_param, prefit=True)
+ X = model.transform(X)
+ #print type(clf_param).__name__ + str(X.shape)
+ clf = clf.fit(X, Y)
+ #print "classType: " +type(clf).__name__
+ return clf,model
+
+def predict(X, Y, clf, model): 
+  X= np.array(X)
+  total_for_each = {} 
+  if model!=None:
+    X = model.transform(X)
+  res= []
+  for v in X:
+   r = clf.predict([v])
+   res.append(r[0])
+  return res
 
 def genData(X,Y,start, end):
  X2 = X[start:end]
@@ -67,7 +89,7 @@ def genData(X,Y,start, end):
 def crossValidation(fn, n,type_of_clf, type_of_param_clf):
  ret = []
  X,Y = readVec(fn)
- scores = cross_val_score(type_of_clf, X, Y, cv=10) 
+ scores = cross_val_score(type_of_clf, X, Y, cv=n) 
  print "Accuracy: " +str(scores.mean()) +" " + str(scores.std())
 # scores = cross_val_score(type_of_clf, X, Y, cv=10, scoring ='f1_micro') 
 # print "F1 micro: " +str(scores.mean()) +" " + str(scores.std())
@@ -92,7 +114,7 @@ def doIt():
 	
 # classifiers
  clfs = [
-    SVC(C=1),
+    SVC(),
 #    KNeighborsClassifier(5,n_jobs=-1),
 #    LinearSVC(C=1),
 #    GaussianProcessClassifier(1.0 * RBF(1.0), warm_start=True, n_jobs=-1, copy_X_train=False), #slow
@@ -111,7 +133,7 @@ def doIt():
  data = []
  tools = []
  data_fn = sys.argv[1]
- num = 10 
+ num = 2 
 
  for clf2 in clf_para:
   for clf1 in clfs:
