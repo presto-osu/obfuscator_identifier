@@ -133,7 +133,7 @@ def doIt():
  data = []
  tools = []
  data_fn = sys.argv[1]
- num = 2 
+ num = 10 
 
  for clf2 in clf_para:
   for clf1 in clfs:
