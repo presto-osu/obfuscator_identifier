@@ -1,0 +1,12 @@
+This is a machine-learning approach to detect Android obfuscator. 
+
+It is described in the paper “Who Changed You? Obfuscator Identification for Android” by Yan Wang and Atanas Rountev, which appeared at the IEEE/ACM International Conference on Mobile Software Engineering and Systems (MOBILESoft'17) \[[PDF](http://web.cse.ohio-state.edu/presto/pubs/msoft17.pdf)\] \[[BibTeX](http://web.cse.ohio-state.edu/presto/pubs/msoft17.bib)\].
+
+## Structure
+* obf_classifier is the folder tool and a separate README.txt file is there for more instructions on how to run this tool
+* dex_parser_src.zip contains the Java source code of the dex parser used in the tool
+* learning.py is the Python script to generate the training model based on the training data. The generated model has two files: filter.pkl and classifier.pkl. The default ones are used in the "obf_classifier". 
+
+## Prerequisites
+ * [Python 2.7](https://www.python.org/download/releases/2.7/)
+ * JDK1.8 or later
